@@ -1,6 +1,7 @@
 package com.springboot.rest.crudcontact.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,16 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public Contact findByNom(String nom) {		
-		return contactRepository.findByNom(nom);
+	public Contact findById(String nom) {		
+		Optional<Contact> result = contactRepository.findById(nom);
+		Contact theContact;
+		if(result.isPresent()) {
+			theContact = result.get();	
+		}
+		else {
+			throw new RuntimeException("contact not found "+nom);
+		}
+		return theContact;			
 	}
 
 	@Override
@@ -32,8 +41,8 @@ public class ContactServiceImpl implements ContactService {
 
 	@Override
 	@Transactional
-	public long deleteByNom(String nom) {
-		return contactRepository.deleteByNom(nom);
+	public void deleteById(String nom) {
+		contactRepository.deleteById(nom);
 	}
 
 

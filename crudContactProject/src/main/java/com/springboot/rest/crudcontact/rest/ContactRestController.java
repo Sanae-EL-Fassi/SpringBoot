@@ -1,6 +1,7 @@
 package com.springboot.rest.crudcontact.rest;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ public class ContactRestController {
 		
 	@GetMapping("/byName")	
 	public Contact getByName(@RequestParam("name")String name) {
-		return contactService.findByNom(name);
+		return contactService.findById(name);
 	}
 	
 	@PutMapping	
@@ -40,11 +41,11 @@ public class ContactRestController {
 	
 	@DeleteMapping("/{nom}")
 	public String deleteContact(@PathVariable String nom) {
-		Contact tempContact = contactService.findByNom(nom);
+		Contact tempContact = contactService.findById(nom);
 		if (tempContact == null) {
 			throw new RuntimeException("contact not found- " + nom);
 		}
-		contactService.deleteByNom(nom);
+		contactService.deleteById(nom);
 		return "Delete contact -" + nom;
 	}
 

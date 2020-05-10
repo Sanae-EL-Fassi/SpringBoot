@@ -1,28 +1,27 @@
 package com.springboot.rest.crudcontact.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="contact")
 public class Contact {
 	@Id
-	@NotNull
+	@NotBlank
 	String nom;
 	
-	@NotNull
+	@NotBlank
 	String prenom;
 	
-	@NotNull
+	@NotBlank
 	String email;
 	
 	public Contact() {
 		
 	}
-	public Contact(@NotNull String prenom, @NotNull String nom, @NotNull String email) {
+	public Contact(String prenom, String nom, String email) {
 		this.prenom = prenom;
 		this.nom = nom;
 		this.email = email;
