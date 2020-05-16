@@ -40,7 +40,6 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	@Transactional
 	public void deleteById(String nom) {
 		contactRepository.deleteById(nom);
 	}
