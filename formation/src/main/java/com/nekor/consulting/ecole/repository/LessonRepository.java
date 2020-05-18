@@ -27,13 +27,10 @@ public interface LessonRepository extends JpaRepository<Lesson, String>, JpaSpec
 	@Query("SELECT l.createDate from Lesson l where l.classRoom =(select s.classRoom from Student s where s.id =:idstudent)")
     List<LocalDate> findFromDateByStudentId(@Param("idstudent") String idStudent);
 	
-/*	@Query("select l from Lesson l where l.createDate >(select a.createDate from Lesson a where a.id =:idLesson)")
-	List<Lesson> findNextCourses(@Param("idLesson") String idLesson);
-*/
+	@Query("SELECT l.createDate from Lesson l where (l.classRoom =(select s.classRoom from Student s where s.id =:idstudent) and l.subject.id=:idsubject)")
+    List<LocalDate> findFromDateByStudentAndSubject(@Param("idstudent") String idStudent,@Param("idsubject") String idSubject);
+
 	
-	/*@Query("select l from Lesson l where l.createDate > CURRENT_DATE")
-	List<Lesson> findNextCourses();
-	*/
-	
-	
+	@Query("select l from Lesson l where l.createDate>(select c.createDate from Lesson c where c.id=:idCourse)")
+	List<Lesson> getNextCourses(@Param("idCourse") String idCourse);
 }

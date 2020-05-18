@@ -38,14 +38,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return new DomainUserDetailsService();
     }
-
-    @Override
+//configure authentication
+    @Override   
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
 
     private PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();	
     }
 
     @Bean
@@ -75,23 +75,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             }
         };
     }
-
+    
+//configure authorization
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                    .addFilter(corsFilter)
-                    .exceptionHandling()
-                    .authenticationEntryPoint(problemSupport)
-                    .accessDeniedHandler(problemSupport)
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/api/authentif")
-                .usernameParameter("email")
+        http   ///authorizeRequests().anyRequests().authenticated()   any request must be log in
+              .csrf()
+              .disable()
+              .addFilter(corsFilter)
+              .exceptionHandling()
+              .authenticationEntryPoint(problemSupport)
+              .accessDeniedHandler(problemSupport)
+               .and()
+               .formLogin()
+            //    .loginPage("/login")
+                .loginProcessingUrl("/api/authentif")//no controller request required(it's given for free)
+          //      .usernameParameter("user")
+          //      .passwordParameter("password")
                 .successHandler(restAuthenticationSuccessHandler())
                 .failureHandler(resAuthenticationFailureHandler())
-                .permitAll()
+                 .permitAll() //everyone can authenticate
                 .and()
                 .logout()
                 .logoutUrl("/api/logout")
@@ -99,7 +102,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/**").permitAll()
+                .antMatchers("/api/category/**","/api/subject/**", "/api/contentType/**")
+                .permitAll()
+          //      .antMatchers("/api/classroom/**").hasAnyAuthority("TEACHER", "STUDENT")
+          
                 .antMatchers("/api/admin").hasAnyAuthority("ADMIN", "COMMERCIEL");
     }
 }

@@ -15,14 +15,18 @@ import java.util.Set;
 public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "categorie")
-    private String category;
+
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="categorie")
+    private Category category;
+ 
 
     @Column(name = "date_naissance")
     private Date birthDate;
 
-    @Column(name = "etablissement_id")
-    private String establishmentId;
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinColumn(name="etablissement_id")
+    private Establishment establishment;
 
     @Id
     @Column(name = "id", insertable = false, nullable = false)
@@ -43,13 +47,6 @@ public class UserModel implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public Date getBirthDate() {
         return birthDate;
@@ -57,14 +54,6 @@ public class UserModel implements Serializable {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public String getEstablishmentId() {
-        return establishmentId;
-    }
-
-    public void setEstablishmentId(String establishmentId) {
-        this.establishmentId = establishmentId;
     }
 
     public String getId() {
@@ -106,4 +95,24 @@ public class UserModel implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+	public Establishment getEstablishment() {
+		return establishment;
+	}
+
+	public void setEstablishment(Establishment establishment) {
+		this.establishment = establishment;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	
+    
+    
 }

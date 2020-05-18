@@ -67,7 +67,7 @@ public class Teacher implements Serializable {
 		classes.add(classRoom);
 	}
 	
-		public void add(Lesson tempLesson) {
+		public void addLesson(Lesson tempLesson) {
 			if(lessons==null) {
 				lessons = new ArrayList<>();
 			}

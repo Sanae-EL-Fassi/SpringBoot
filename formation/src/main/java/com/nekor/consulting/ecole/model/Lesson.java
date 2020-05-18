@@ -23,7 +23,7 @@ public class Lesson implements Serializable {
     private static final long serialVersionUID = 1L;
  
     @Column(name = "date_creation")
-    @Temporal(TemporalType.DATE)
+  //  @Temporal(TemporalType.DATE)
     private LocalDate createDate;
 
     @Id

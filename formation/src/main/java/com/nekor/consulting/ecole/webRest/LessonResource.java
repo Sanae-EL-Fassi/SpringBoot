@@ -72,26 +72,25 @@ public class LessonResource {
 	  }
 	  
 	  //find start date of courses by student id
-	  @GetMapping("{studentId}")
+	  @GetMapping("/fromdate/{studentId}")
 	  private List<LocalDate> findDateStart(@PathVariable String studentId) {
 	       return lessonRepository.findFromDateByStudentId(studentId);
 		                 
 	  }
+	 //get from date by student id and subject id
+	  @GetMapping("/fromdate")
+	  private List<LocalDate> findDateStart(@RequestParam(name="id1") String studentId, @RequestParam(name= "id2") String subjectId) {
+	       return lessonRepository.findFromDateByStudentAndSubject(studentId, subjectId);
+		                 
+	  }
 	  
-	  //find next cours
-	/*  @GetMapping("/nextcourse/{lessonId}")
-	  private Optional<Lesson> findNextLessons(@PathVariable String lessonId){
-	 // return lessonRepository.findNextCourses(lessonId);
-		  return  lessonRepository.findById(lessonId);
-    }
-			  
-*/	  
-	/*  @GetMapping("/nextcourses")
-	  private List<Lesson> findNextLessons(){
-		  return  lessonRepository.findNextCourses();
-    }
-    
-    */
+	  @GetMapping("/nextcourses/{lessonId}")
+	  private List<Lesson> getNextCourses(@PathVariable(name = "lessonId") String lessonId) {
+		 return lessonRepository.getNextCourses(lessonId);
+	    }
+	  
+	  
+	  
 			    
 	  @GetMapping("/all")
 	    private List<Lesson> findAlllessons() {

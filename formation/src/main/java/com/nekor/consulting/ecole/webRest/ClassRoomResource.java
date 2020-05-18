@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nekor.consulting.ecole.model.ClassRoom;
+import com.nekor.consulting.ecole.model.Student;
 import com.nekor.consulting.ecole.model.Teacher;
 import com.nekor.consulting.ecole.repository.ClassRoomRepository;
 
@@ -53,8 +54,7 @@ public class ClassRoomResource {
 	private List<String> findTeachersId(@PathVariable String classRoomId) {
 		
 		List<String> teachersIds = null;
-		Optional<ClassRoom> classtemp = classRoomRepository.findById(classRoomId);
-		
+		Optional<ClassRoom> classtemp = classRoomRepository.findById(classRoomId);	
 		if (classtemp != null) {
 			teachersIds = new ArrayList<String>();
 			List<Teacher> teachers = classtemp.get().getTeachers();
@@ -63,6 +63,27 @@ public class ClassRoomResource {
 			}
 		}
 		return teachersIds;
+
+	}
+
+	
+	@GetMapping("/users/{classRoomId}")
+	private List<String> findUsersIds(@PathVariable String classRoomId) {
+		
+		List<String> usersIds = null;
+		Optional<ClassRoom> classtemp = classRoomRepository.findById(classRoomId);	
+		if (classtemp != null) {
+			usersIds = new ArrayList<String>();
+			List<Teacher> teachers = classtemp.get().getTeachers();		
+			List<Student> students = classtemp.get().getStudents();			
+			for (Teacher t : teachers) {
+				usersIds.add(t.getId());
+			}
+			for (Student s : students) {
+				usersIds.add(s.getId());
+			}
+		}
+		return usersIds;
 
 	}
 

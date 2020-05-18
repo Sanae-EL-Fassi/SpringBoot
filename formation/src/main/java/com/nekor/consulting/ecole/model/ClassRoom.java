@@ -93,7 +93,16 @@ private List<Teacher> teachers;
 		}
 		teachers.add(teacher);
 	}
-			
+		
+		
+		public List<Student> getStudents() {
+			return students;
+		}
+
+		public void setStudents(List<Student> students) {
+			this.students = students;
+		}
+
 		public void add(Lesson tempLesson) {
 			if(lessons==null) {
 				lessons = new ArrayList<>();
