@@ -33,4 +33,9 @@ public interface LessonRepository extends JpaRepository<Lesson, String>, JpaSpec
 	
 	@Query("select l from Lesson l where l.createDate>(select c.createDate from Lesson c where c.id=:idCourse)")
 	List<Lesson> getNextCourses(@Param("idCourse") String idCourse);
+	
+	@Query("select l from Lesson l where l.createDate<(select c.createDate from Lesson c where c.id=:idCourse)")
+	List<Lesson> getLastCourses(@Param("idCourse") String idCourse);
+	
 }
+

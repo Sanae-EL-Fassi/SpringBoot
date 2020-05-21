@@ -65,25 +65,17 @@ public class ClassRoomResource {
 		return teachersIds;
 
 	}
-
 	
 	@GetMapping("/users/{classRoomId}")
-	private List<String> findUsersIds(@PathVariable String classRoomId) {
-		
-		List<String> usersIds = null;
+	private ClassRoom findUsersIds(@PathVariable String classRoomId) {
+		ClassRoom classRoom =null;
 		Optional<ClassRoom> classtemp = classRoomRepository.findById(classRoomId);	
-		if (classtemp != null) {
-			usersIds = new ArrayList<String>();
-			List<Teacher> teachers = classtemp.get().getTeachers();		
-			List<Student> students = classtemp.get().getStudents();			
-			for (Teacher t : teachers) {
-				usersIds.add(t.getId());
-			}
-			for (Student s : students) {
-				usersIds.add(s.getId());
-			}
+		if (classtemp.isPresent()) {
+			classRoom=classtemp.get();
+			classRoom.getTeachers();		
+			classRoom.getStudents();			
 		}
-		return usersIds;
+		return classRoom;
 
 	}
 

@@ -90,8 +90,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                .formLogin()
             //    .loginPage("/login")
                 .loginProcessingUrl("/api/authentif")//no controller request required(it's given for free)
-          //      .usernameParameter("user")
-          //      .passwordParameter("password")
+               .usernameParameter("user")
+               .passwordParameter("password")
                 .successHandler(restAuthenticationSuccessHandler())
                 .failureHandler(resAuthenticationFailureHandler())
                  .permitAll() //everyone can authenticate
@@ -104,7 +104,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/category/**","/api/subject/**", "/api/contentType/**")
                 .permitAll()
-          //      .antMatchers("/api/classroom/**").hasAnyAuthority("TEACHER", "STUDENT")
+                .antMatchers("/api/classroom/**").hasAnyAuthority("TEACHER", "STUDENT")
           
                 .antMatchers("/api/admin").hasAnyAuthority("ADMIN", "COMMERCIEL");
     }

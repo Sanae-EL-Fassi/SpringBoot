@@ -8,7 +8,7 @@ import org.zalando.problem.violations.ConstraintViolationProblemModule;
 @Configuration
 public class JacksonConfiguration {
     @Bean
-    ProblemModule problemModule() {
+   ProblemModule problemModule() {
         return new ProblemModule();
     }
 
